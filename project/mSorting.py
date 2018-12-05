@@ -1,74 +1,48 @@
 from project.__init__ import printSwitch
 from datastruct.Stack import PilaArrayList as Stack
-import random
+from selection.Selection import partitionDet, quickSelectDet, quickSelectRand
 
 
-# QuickSort - RECURSIVE, deterministic and non-deterministic
+# QuickSort - RECURSIVE
 
-def quickSort(l, det=False):
-    recursiveQuickSort(l, 0, len(l) - 1, det)
+def quickSort(l, selectionAlgorithm, *otherParameters):
+    recursiveQuickSort(l, 0, len(l) - 1, selectionAlgorithm, *otherParameters)
 
 
-def recursiveQuickSort(l, left, right, det=False):
+def recursiveQuickSort(l, left, right, selectionAlgorithm, *otherParameters):
     if printSwitch.dumpOperations:
-        print("recursiveQuickSort({},{})".format(left, right))
+        print("recursiveQuickSort({},{},{})".format(left, right, selectionAlgorithm.__name__))
 
     if left >= right:
         return
 
-    mid = partition(l, left, right, det)
-    recursiveQuickSort(l, left, mid - 1, det)
-    recursiveQuickSort(l, mid + 1, right, det)
+    k = int(len(l[left:right+1]) / 2.0) + 1  # index of the median
+    median = selectionAlgorithm(l[left:right + 1], k, *otherParameters)  # pass a copy of the list to selectionAlgorithm
+
+    if printSwitch.dumpOperations:
+        print("Selected median:", median)
+
+    mid = partitionDet(l, left, right, median)
+
+    if printSwitch.dumpOperations:
+        print("- " * left + str(l[left:right + 1]) + " -" * (len(l) - right - 1))
+
+    recursiveQuickSort(l, left, mid - 1, selectionAlgorithm, *otherParameters)
+    recursiveQuickSort(l, mid + 1, right, selectionAlgorithm, *otherParameters)
 
     if printSwitch.dumpOperations:
         print("- " * left + str(l[left:right + 1]) + " -" * (len(l) - right - 1))
 
 
-def partition(l, left, right, det=False):
-    inf = left
-    sup = right + 1
+# End of QuickSort - RECURSIVE
 
-    if not det:
-        random.seed(1)
-        mid = random.randint(left, right)
-        l[left], l[mid] = l[mid], l[left]  # exchange first elem with the randomically chosen one
+# QuickSort - ITERATIVE
 
-    mid = left # the median is the first elem of the array
-
-    if printSwitch.dumpOperations:
-        print("Selected median:", l[mid])
-
-    while True:
-        inf += 1
-        while inf <= right and l[inf] <= l[mid]:
-            inf += 1
-
-        sup -= 1
-        while l[sup] > l[mid]:
-            sup -= 1
-
-        if inf < sup:
-            l[inf], l[sup] = l[sup], l[inf]
-        else:
-            break
-
-    l[mid], l[sup] = l[sup], l[mid]
-
-    if printSwitch.dumpOperations:
-        print("- " * left + str(l[left:right + 1]) + " -" * (len(l) - right - 1))
-
-    return sup
+def quickSortIter(l, selectionAlgorithm, *otherParameters):
+    iterativeQuickSort(l, 0, len(l) - 1, selectionAlgorithm, *otherParameters)
 
 
-# End of QuickSort - RECURSIVE, deterministic and non-deterministic
-
-# QuickSort - ITERATIVE, deterministic and non-deterministic
-
-def quickSortIter(l, det=False):
-    iterativeQuickSort(l, 0, len(l) - 1, det)
-
-
-def iterativeQuickSort(l, left, right, det=False):
+def iterativeQuickSort(l, left, right, selectionAlgorithm, *otherParameters):
     theStack = Stack()
     theStack.push(left)
     theStack.push(right)
@@ -77,12 +51,15 @@ def iterativeQuickSort(l, left, right, det=False):
         left = theStack.pop()
 
         if printSwitch.dumpOperations:
-            print("quickSortIter-step({},{})".format(left, right))
+            print("quickSortIter-step({},{},{})".format(left, right, selectionAlgorithm.__name__))
 
         if right <= left:
             continue
 
-        mid = partition(l, left, right, det)
+        k = int(len(l[left:right + 1]) / 2.0) + 1
+        median = selectionAlgorithm(l[left:right + 1], k, *otherParameters)
+
+        mid = partitionDet(l, left, right, median)
 
         theStack.push(left)
         theStack.push(mid - 1)
@@ -91,15 +68,17 @@ def iterativeQuickSort(l, left, right, det=False):
         theStack.push(right)
 
 
-# End of QuickSort - ITERATIVE, deterministic and non-deterministic
+# End of QuickSort - ITERATIVE
 
 
 if __name__ == "__main__":
     l = [4, 1234, 34, 566, 8, 2, 5346, 8, 3, 263, 7, 8, 3, 7, 57, 2, 43, 87, 845, 42]
     print(l)
 
-    quickSort(l)
-    # quickSortIter(l)
+    quickSort(l, quickSelectRand)
+    # quickSortIter(l, quickSelectRand)
+    # quickSort(l, quickSelectDet, 3)
+    # quickSortIter(l, quickSelectDet, 3)
 
     # output should be: 2,2,3,3,4,7,7,8,8,8,34,42,43,57,87,263,566,845,1234,5346]
     print(l)
