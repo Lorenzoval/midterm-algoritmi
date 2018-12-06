@@ -4,10 +4,9 @@ from project.modules.Sample import sample
 
 
 def sampleTest(inputList, k, sampleFunc):
-    l = inputList[:]
     random.seed(1)  # both functions will use the same seed during test
     start = time()
-    sampleFunc(l, k)
+    sampleFunc(inputList, k)
     return time() - start
 
 
