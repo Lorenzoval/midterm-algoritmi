@@ -1,4 +1,4 @@
-from project.__init__ import printSwitch
+from project.sorting.__init__ import printSwitch
 from datastruct.Stack import PilaArrayList as Stack
 from selection.Selection import partitionDet, quickSelectDet, quickSelectRand
 
