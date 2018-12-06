@@ -1,6 +1,7 @@
 from project.sorting.__init__ import printSwitch
 from datastruct.Stack import PilaArrayList as Stack
 from selection.Selection import partitionDet, quickSelectDet, quickSelectRand
+from math import ceil
 
 
 # QuickSort - RECURSIVE
@@ -16,7 +17,7 @@ def recursiveQuickSort(l, left, right, selectionAlgorithm, *otherParameters):
     if left >= right:
         return
 
-    k = int(len(l[left:right+1]) / 2.0) + 1  # index of the median
+    k = ceil(len(l[left:right + 1]) / 2)  # index of the median + 1
     median = selectionAlgorithm(l[left:right + 1], k, *otherParameters)  # pass a copy of the list to selectionAlgorithm
 
     if printSwitch.dumpOperations:
@@ -56,7 +57,7 @@ def iterativeQuickSort(l, left, right, selectionAlgorithm, *otherParameters):
         if right <= left:
             continue
 
-        k = int(len(l[left:right + 1]) / 2.0) + 1
+        k = ceil(len(l[left:right + 1]) / 2)
         median = selectionAlgorithm(l[left:right + 1], k, *otherParameters)
 
         mid = partitionDet(l, left, right, median)
