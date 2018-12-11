@@ -26,6 +26,12 @@ def selectionTest(l, k, selectionAlgorithm, *otherParameters):
     return time() - start
 
 
+def sortingTest(l, sortingAlgorithm, *otherParameters):
+    start = time()
+    sortingAlgorithm(l, *otherParameters)
+    return time() - start
+
+
 if __name__=="__main__":
     l = generateRandList(10, 5)
     print(l)
