@@ -1,4 +1,5 @@
 import random
+from time import time
 
 
 def generateRandList(steps, maxValue=None):
@@ -17,6 +18,12 @@ def generateSortedList(stop, start=0, step=1):
 
 def generateRevSortedList(start, stop=-1, step=-1):
     return list(range(start, stop, step))
+
+
+def selectionTest(l, k, selectionAlgorithm, *otherParameters):
+    start = time()
+    selectionAlgorithm(l, k, *otherParameters)
+    return time() - start
 
 
 if __name__=="__main__":
