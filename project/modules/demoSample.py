@@ -1,6 +1,7 @@
 from time import time
 import random
 from project.modules.Sample import sample
+from project.modules.Testing import generateRandList
 
 
 def sampleTest(inputList, k, sampleFunc):
@@ -8,16 +9,6 @@ def sampleTest(inputList, k, sampleFunc):
     start = time()
     sampleFunc(inputList, k)
     return time() - start
-
-
-def generateRandList(steps, maxValue=None):
-    if maxValue == None:
-        maxValue = steps
-    retList = []
-    for i in range(steps):  # @UnusedVariable
-        retList.append(random.randint(0, maxValue))
-
-    return retList
 
 
 if __name__ == "__main__":
