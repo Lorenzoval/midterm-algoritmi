@@ -28,9 +28,10 @@ def avgBestCaseM(l, k, num, stopM, startM=1):
         myDict[k] = values[k - startM]
     for _ in range(num):
         for i in range(startM, stopM):
-            myDict[i] += selectionTest(l, k, sampleMedianSelect, i)
+            myDict[i] += selectionTest(l[:], k, sampleMedianSelect, i)
     for j in keys:
         myDict[j] = myDict[j] / num
+    # print(myDict)
     return minKeyDict(myDict)  # oppure return min(myDict, key=myDict.get)
 
 
