@@ -23,9 +23,8 @@ def avgBestCaseM(l, k, num, stopM, startM=1):
     """
     myDict = {}
     keys = range(startM, stopM)
-    values = [0 for _ in keys]
     for k in keys:
-        myDict[k] = values[k - startM]
+        myDict[k] = 0
     for _ in range(num):
         for i in range(startM, stopM):
             myDict[i] += selectionTest(l[:], k, sampleMedianSelect, i)
@@ -40,14 +39,14 @@ if __name__=="__main__":
     ordered = generateSortedList(25000)
     testSMSForM(ordered[:], ceil(len(ordered) / 2), 50)
     print("Launching 20 tests, on average, the best case was achieved with m =",
-           avgBestCaseM(ordered[:], ceil(len(ordered) / 2), 20, 50))
+           avgBestCaseM(ordered[:], ceil(len(ordered) / 2), 20, 50, 3))
     print("List with 25000 elements in descending order:")
     reverse = generateRevSortedList(24999)
     testSMSForM(reverse[:], ceil(len(reverse) / 2), 50)
     print("Launching 20 tests, on average, the best case was achieved with m =",
-           avgBestCaseM(reverse[:], ceil(len(reverse) / 2), 20, 50))
+           avgBestCaseM(reverse[:], ceil(len(reverse) / 2), 20, 50, 3))
     print("List with 25000 random elements:")
     rand = generateRandList(25000)
     testSMSForM(rand[:], ceil(len(rand) / 2), 50)
     print("Launching 20 tests, on average, the best case was achieved with m =",
-           avgBestCaseM(rand[:], ceil(len(rand) / 2), 20, 50))
+           avgBestCaseM(rand[:], ceil(len(rand) / 2), 20, 50, 3))
