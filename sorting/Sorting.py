@@ -212,7 +212,7 @@ def partition(l, left, right, det=False):
     sup = right + 1
 
     if not det:
-        random.seed(1)
+        # random.seed(1)
         mid = random.randint(left, right)
         l[left], l[mid] = l[mid], l[left]  # exchange first elem with the randomically chosen one
 
