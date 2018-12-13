@@ -17,7 +17,7 @@ def generateSortedList(stop, start=0, step=1):
 
 
 def generateRevSortedList(start, stop=-1, step=-1):
-    return list(range(start, stop, step))
+    return list(range(start - 1, stop, step))
 
 
 def selectionTest(l, k, selectionAlgorithm, *otherParameters):
